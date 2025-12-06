@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000000;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Glitch/Hover effect for the big text */
+        .big-text {
+            line-height: 1.1;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .big-text:hover {
+            transform: skewX(-10deg) translateX(10px);
+            color: #87CEEB; /* SkyBlue */
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #87CEEB;
+            border-radius: 4px;
+        }
+
+        /* 3D Flip Card Styles */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .group:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        /* Filter Button Active State */
+        .filter-btn.active {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col">
+
+    <!-- HEADER (Fixed) -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- 1st Box: Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <div class="w-10 h-10 text-white hover:text-sky-400 transition-colors cursor-pointer">
+                        <svg role="img" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><title>Resend</title><path d="M2.023 0v24h5.553v-8.434h2.998L15.326 24h6.65l-5.372-9.258a7.652 7.652 0 0 0 3.316-3.016c.709-1.21 1.062-2.57 1.062-4.08 0-1.462-.353-2.767-1.062-3.91-.709-1.165-1.692-2.079-2.95-2.742C15.737.331 14.355 0 12.823 0Zm5.553 4.87h4.219c.731 0 1.349.125 1.851.376.526.252.925.618 1.2 1.098.274.457.412.994.412 1.611S15.132 9.12 14.88 9.6c-.229.48-.572.856-1.03 1.13-.434.252-.948.38-1.542.38H7.576Z"/></svg>
+                    </div>
+                </div>
+
+                <!-- 2nd Box: Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">Home</a>
+                    <a href="#skills" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">Skills</a>
+                    <a href="#about" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">About Me</a>
+                    <a href="#contact" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">Contact</a>
+                </nav>
+
+                <!-- 3rd Box: Button -->
+                <div class="hidden md:flex items-center">
+                    <!-- Changed href to #projects -->
+                    <a href="#projects" class="px-6 py-2 font-bold text-black bg-white rounded-[5px] transition-colors duration-300 hover:bg-sky-400">
+                        PROJECTS
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-white hover:text-sky-400 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">Home</a>
+                <a href="#skills" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">Skills</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">About Me</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">Contact</a>
+                <a href="#projects" class="block px-3 py-2 text-base font-bold text-white hover:text-sky-400">PROJECTS</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HERO -->
+    <section class="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        
+        <!-- Background Elements -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-red-600/10 rounded-full blur-3xl -z-10"></div>
+
+        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-24 items-center py-12">
+            
+            <!-- LEFT COLUMN: Typography -->
+            <div class="space-y-4 animate-fade-in-left">
+                <p class="text-xl sm:text-2xl text-gray-400 font-light italic tracking-wide">
+                    Wana Know About Me...? <span class="text-white font-normal not-italic">I</span>
+                </p>
+                
+                <div class="flex flex-col space-y-2">
+                    <h1 class="big-text text-6xl sm:text-8xl lg:text-9xl font-black text-white tracking-tighter cursor-default">
+                        CREATE
+                    </h1>
+                    <h1 class="big-text text-6xl sm:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-white tracking-tighter cursor-default">
+                        CRAFT
+                    </h1>
+                    <h1 class="big-text text-6xl sm:text-8xl lg:text-9xl font-black text-white tracking-tighter cursor-default whitespace-nowrap">
+                        EXPLORE <span class="text-sky-400">!</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Services & Info -->
+            <div class="flex flex-col justify-center space-y-8 lg:pl-12 animate-fade-in-right">
+                
+                <h2 class="text-3xl font-bold text-white relative inline-block">
+                    The Service I Provide
+                    <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-sky-400"></span>
+                </h2>
+
+                <div class="p-0">
+                    <p class="text-gray-300 leading-relaxed text-lg">
+                        I specialize in building digital experiences that merge creativity with functionality. From robust backend architectures to stunning interactive frontends, I bring ideas to life using modern web technologies.
+                    </p>
+                </div>
+
+                <div>
+                    <a href="#projects" class="inline-flex items-center justify-center px-8 py-4 font-bold text-lg text-black bg-white rounded-[5px] transition-colors duration-300 hover:bg-sky-400">
+                        PROJECTS
+                        <i class="fas fa-arrow-right ml-3"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: ABOUT ME -->
+    <section id="about" class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-black relative">
+        
+        <!-- The Big Box (Main Container) -->
+        <div class="max-w-6xl w-full border border-white rounded-[5px] p-6 lg:p-8 animate-on-scroll opacity-0 translate-y-10 transition duration-1000">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full items-center">
+                
+                <!-- Inner Left Box (Image Container) -->
+                <!-- bg-white, relative, radius 5px. Image absolute. -->
+                <div class="bg-white relative w-full h-[350px] lg:h-[400px] rounded-[5px] overflow-hidden">
+                    <img src="" alt="About Me Image" class="absolute inset-0 w-full h-full object-cover">
+                    <!-- Placeholder Text for empty src -->
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                        <span class="text-sm uppercase tracking-widest">[ Image Placeholder ]</span>
+                    </div>
+                </div>
+
+                <!-- Right Boxes (Content) -->
+                <div class="flex flex-col justify-center space-y-6">
+                    
+                    <!-- The 3 Headings -->
+                    <div class="space-y-1">
+                        <h2 class="text-3xl font-black text-white uppercase">Your Name</h2>
+                        <h3 class="text-xl font-bold text-sky-400">Full Stack Developer</h3>
+                        <h4 class="text-lg font-medium text-gray-400">Based in Creative City</h4>
+                    </div>
+
+                    <!-- The Blue Box (Para) -->
+                    <div class="text-base text-gray-300 leading-relaxed">
+                        <p>
+                            I am a passionate developer dedicated to creating intuitive and dynamic user experiences. With a strong foundation in design principles and coding standards, I strive to build applications that are not only functional but also visually compelling.
+                        </p>
+                    </div>
+
+                    <!-- The Red Box Style Button (My Works) -->
+                    <div>
+                        <a href="#projects" class="inline-flex items-center justify-center px-8 py-3 font-bold text-lg text-black bg-white rounded-[5px] transition-colors duration-300 hover:bg-sky-400">
+                            My Works
+                            <i class="fas fa-briefcase ml-3"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- SECTION 3: MY TOP SKILLS -->
+    <section id="skills" class="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-black relative border-t border-gray-900">
+        
+        <!-- Title -->
+        <div class="mb-12 text-center animate-on-scroll opacity-0 translate-y-10 transition duration-1000">
+            <h2 class="text-4xl sm:text-5xl font-black text-white uppercase tracking-wider relative inline-block pb-4">
+                My Top Skills
+                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-sky-400"></span>
+            </h2>
+        </div>
+
+        <!-- The "Big Box" Container (Scrollable) -->
+        <!-- Adjusted height to h-[280px] as requested -->
+        <div class="max-w-6xl w-full border border-gray-800 rounded-[5px] p-4 bg-white/5 backdrop-blur-sm overflow-y-auto h-[280px] custom-scrollbar animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-200">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Skill 1: Python -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fab fa-python text-4xl text-blue-400"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">Python</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">Python</h3>
+                            <p class="text-sm text-sky-100">"Building robust backend logic & automation scripts."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 2: Java -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fab fa-java text-4xl text-red-500"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">Java</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">Java</h3>
+                            <p class="text-sm text-sky-100">"Enterprise-grade object-oriented solutions."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 3: HTML -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fab fa-html5 text-4xl text-orange-500"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">HTML</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">HTML</h3>
+                            <p class="text-sm text-sky-100">"Semantic structure & accessibility foundations."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 4: CSS -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fab fa-css3-alt text-4xl text-blue-500"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">CSS</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">CSS</h3>
+                            <p class="text-sm text-sky-100">"Responsive layouts & stunning visual styles."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 5: PostgreSQL -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fas fa-database text-4xl text-sky-300"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">PostgreSQL</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">PostgreSQL</h3>
+                            <p class="text-sm text-sky-100">"Managing complex data with reliable queries."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 6: n8n -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fas fa-project-diagram text-4xl text-pink-500"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">n8n</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">n8n</h3>
+                            <p class="text-sm text-sky-100">"Automating workflows across endless services."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 7: JavaScript -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fab fa-js text-4xl text-yellow-400"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">JavaScript</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">JavaScript</h3>
+                            <p class="text-sm text-sky-100">"Creating dynamic & interactive web experiences."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 8: React -->
+                <div class="group h-40 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d shadow-lg rounded-[5px]">
+                        <!-- Front -->
+                        <div class="absolute inset-0 w-full h-full bg-black border border-gray-700 rounded-[5px] flex flex-col items-center justify-center gap-4 backface-hidden z-10">
+                            <i class="fab fa-react text-4xl text-sky-400"></i>
+                            <h3 class="text-lg font-bold text-white uppercase">React</h3>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 w-full h-full bg-sky-900 border border-sky-400 rounded-[5px] flex flex-col items-center justify-center p-4 text-center backface-hidden rotate-y-180">
+                            <h3 class="text-lg font-bold text-white mb-2">React</h3>
+                            <p class="text-sm text-sky-100">"Building modern, component-based interfaces."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: MY PROJECTS -->
+    <section id="projects" class="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-black border-t border-gray-900 relative">
+        
+        <!-- 1st Box: Title -->
+        <div class="text-center mb-10 animate-on-scroll opacity-0 translate-y-10 transition duration-1000">
+            <h2 class="text-4xl sm:text-5xl font-black text-white uppercase tracking-wider relative inline-block pb-4">
+                My Projects
+                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-sky-400"></span>
+            </h2>
+        </div>
+
+        <!-- 2nd Box: Genre Filters -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-100">
+            <button class="filter-btn active px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="all">All</button>
+            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="frontend">Frontend</button>
+            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="fullstack">Fullstack</button>
+            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="n8n">n8n Automation</button>
+            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="featured">Featured</button>
+        </div>
+
+        <!-- 3rd Big Box: Project Grid Container -->
+        <div class="max-w-7xl mx-auto w-full border border-gray-800 rounded-[5px] p-6 sm:p-8 bg-white/5 backdrop-blur-sm animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-200">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1 (Featured, Fullstack) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="featured fullstack">
+                    <!-- Image -->
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop" alt="E-commerce Dashboard" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-2 right-2 bg-sky-400 text-black text-xs font-bold px-2 py-1 rounded">FEATURED</div>
+                    </div>
+                    <!-- Description -->
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">E-Commerce Dashboard</h3>
+                        <p class="text-sm text-gray-400 mb-4">A complete admin panel for managing products and orders built with React & Node.js.</p>
+                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 2 (Frontend) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="frontend">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop" alt="Portfolio v1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Creative Agency Site</h3>
+                        <p class="text-sm text-gray-400 mb-4">A high-performance landing page with complex GSAP animations and Tailwind CSS.</p>
+                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 3 (n8n Automation) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="n8n featured">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop" alt="Workflow Automation" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-2 right-2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded">n8n</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Lead Gen Auto-Pilot</h3>
+                        <p class="text-sm text-gray-400 mb-4">Automated workflow that scrapes leads, enriches data, and sends personalized emails via n8n.</p>
+                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 4 (Fullstack) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="fullstack">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" alt="Social Media App" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Social Connect App</h3>
+                        <p class="text-sm text-gray-400 mb-4">Real-time chat and feed application using PostgreSQL, Express, and Socket.io.</p>
+                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                 <!-- Project 5 (Frontend) -->
+                 <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="frontend">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Dashboard UI" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Analytics Dashboard UI</h3>
+                        <p class="text-sm text-gray-400 mb-4">Clean, responsive data visualization dashboard using Chart.js and CSS Grid.</p>
+                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 6 (n8n) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="n8n">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop" alt="Bot Automation" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Slack Ops Bot</h3>
+                        <p class="text-sm text-gray-400 mb-4">A bot that handles internal ticketing and status updates automatically via n8n triggers.</p>
+                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CONTACT -->
+    <section id="contact" class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-black relative border-t border-gray-900">
+        
+        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+            
+            <!-- Left Box: Contact Information -->
+            <div class="flex flex-col space-y-8 animate-on-scroll opacity-0 translate-y-10 transition duration-1000">
+                <div class="space-y-4">
+                    <p class="text-sky-400 font-bold tracking-widest uppercase text-sm">Get in Touch</p>
+                    <h2 class="text-5xl font-black text-white uppercase leading-none">Let's Work<br>Together</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-md">
+                        Have a project in mind or just want to say hi? I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Email -->
+                    <div class="flex items-center space-x-4 group cursor-pointer">
+                        <div class="w-12 h-12 bg-gray-900 rounded-[5px] flex items-center justify-center group-hover:bg-sky-400 transition-colors duration-300">
+                            <i class="fas fa-envelope text-white group-hover:text-black transition-colors"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-bold uppercase">Email Me</p>
+                            <p class="text-white text-lg font-medium">rithissathanantham@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="flex items-center space-x-4 group cursor-pointer">
+                        <div class="w-12 h-12 bg-gray-900 rounded-[5px] flex items-center justify-center group-hover:bg-sky-400 transition-colors duration-300">
+                            <i class="fas fa-map-marker-alt text-white group-hover:text-black transition-colors"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-bold uppercase">Location</p>
+                            <p class="text-white text-lg font-medium">Kotagiri, The nilgiries</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Links in Left Box -->
+                <div class="pt-8">
+                    <div class="flex space-x-6">
+                        <a href="https://github.com/Rithis24" class="w-10 h-10 border border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-black hover:bg-sky-400 hover:border-sky-400 transition-all duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/rithis24/" class="w-10 h-10 border border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-black hover:bg-sky-400 hover:border-sky-400 transition-all duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/rith.is_24/" class="w-10 h-10 border border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-black hover:bg-sky-400 hover:border-sky-400 transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Box: Contact Form -->
+            <div class="bg-white/5 backdrop-blur-sm border border-gray-800 p-8 rounded-[5px] animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-200">
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name -->
+                        <div class="relative group">
+                            <input type="text" id="name" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Name">
+                            <label for="name" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Name</label>
+                        </div>
+                        <!-- Email -->
+                        <div class="relative group">
+                            <input type="email" id="email" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Email">
+                            <label for="email" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Email</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Subject -->
+                    <div class="relative group">
+                        <input type="text" id="subject" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Subject">
+                        <label for="subject" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Subject</label>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="relative group">
+                        <textarea id="message" rows="5" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent resize-none" placeholder="Message"></textarea>
+                        <label for="message" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Message</label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full px-6 py-4 font-bold text-black bg-white rounded-[5px] transition-all duration-300 hover:bg-sky-400 hover:shadow-[0_0_20px_rgba(135,206,235,0.4)]">
+                        SEND MESSAGE
+                        <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-500 text-sm">© 2025 <span class="text-white font-bold">Rithis Portfolio</span>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Social Links Sidebar -->
+    <div class="hidden lg:flex fixed left-8 bottom-0 flex-col gap-6 items-center z-40">
+        <div class="w-px h-20 bg-gray-700"></div>
+        <a href="https://github.com/Rithis24" class="text-gray-400 hover:text-sky-400 text-xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/rithis24/" class="text-gray-400 hover:text-sky-400 text-xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/rith.is_24/" class="text-gray-400 hover:text-sky-400 text-xl transition-transform hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+        <div class="w-px h-20 bg-gray-700"></div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Animate elements in the first section
+        document.querySelectorAll('.animate-fade-in-left').forEach(el => {
+            el.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-1000', 'ease-out');
+            observer.observe(el);
+        });
+        document.querySelectorAll('.animate-fade-in-right').forEach(el => {
+            el.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-1000', 'delay-200', 'ease-out');
+            observer.observe(el);
+        });
+
+        // Animate Sections
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Project Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
+                        card.style.display = 'block';
+                        // Add fade in animation
+                        card.classList.add('animate-on-scroll');
+                        card.classList.remove('hidden');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
