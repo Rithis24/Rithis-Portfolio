@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Design</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* Custom Font Import */
@@ -15,12 +16,15 @@
             background-color: #000000;
             color: white;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; /* Smoother text on Chrome/Edge */
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Glitch/Hover effect for the big text */
         .big-text {
             line-height: 1.1;
             transition: transform 0.3s ease, color 0.3s ease;
+            will-change: transform; /* Performance optimization for Edge */
         }
         .big-text:hover {
             transform: skewX(-10deg) translateX(10px);
@@ -65,7 +69,7 @@
         }
     </style>
 </head>
-<body class="bg-black text-white min-h-screen flex flex-col">
+<body class="bg-black text-white min-h-screen flex flex-col w-full overflow-x-hidden">
 
     <!-- HEADER (Fixed) -->
     <header class="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 transition-all duration-300">
@@ -73,31 +77,30 @@
             <div class="flex justify-between items-center h-20">
                 
                 <!-- 1st Box: Logo -->
-                <div class="flex-shrink-0 flex items-center">
+                <div class="flex-shrink-0 flex items-center z-50">
                     <div class="w-10 h-10 text-white hover:text-sky-400 transition-colors cursor-pointer">
                         <svg role="img" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><title>Resend</title><path d="M2.023 0v24h5.553v-8.434h2.998L15.326 24h6.65l-5.372-9.258a7.652 7.652 0 0 0 3.316-3.016c.709-1.21 1.062-2.57 1.062-4.08 0-1.462-.353-2.767-1.062-3.91-.709-1.165-1.692-2.079-2.95-2.742C15.737.331 14.355 0 12.823 0Zm5.553 4.87h4.219c.731 0 1.349.125 1.851.376.526.252.925.618 1.2 1.098.274.457.412.994.412 1.611S15.132 9.12 14.88 9.6c-.229.48-.572.856-1.03 1.13-.434.252-.948.38-1.542.38H7.576Z"/></svg>
                     </div>
                 </div>
 
                 <!-- 2nd Box: Navigation Links -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">Home</a>
-                    <a href="#skills" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">Skills</a>
-                    <a href="#about" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">About Me</a>
-                    <a href="#contact" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-sm uppercase tracking-wider">Contact</a>
+                <nav class="hidden md:flex space-x-4 lg:space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-xs lg:text-sm uppercase tracking-wider">Home</a>
+                    <a href="#skills" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-xs lg:text-sm uppercase tracking-wider">Skills</a>
+                    <a href="#about" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-xs lg:text-sm uppercase tracking-wider">About Me</a>
+                    <a href="#contact" class="text-gray-300 hover:text-sky-400 font-medium transition-colors text-xs lg:text-sm uppercase tracking-wider">Contact</a>
                 </nav>
 
                 <!-- 3rd Box: Button -->
                 <div class="hidden md:flex items-center">
-                    <!-- Changed href to #projects -->
-                    <a href="#projects" class="px-6 py-2 font-bold text-black bg-white rounded-[5px] transition-colors duration-300 hover:bg-sky-400">
+                    <a href="#projects" class="px-4 lg:px-6 py-2 font-bold text-black bg-white rounded-[5px] transition-colors duration-300 hover:bg-sky-400 text-xs lg:text-sm">
                         PROJECTS
                     </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-white hover:text-sky-400 focus:outline-none">
+                <div class="md:hidden flex items-center z-50">
+                    <button id="mobile-menu-btn" class="text-white hover:text-sky-400 focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -105,55 +108,55 @@
         </div>
 
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-gray-800">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-gray-800 absolute top-20 left-0 w-full z-40">
+            <div class="px-4 pt-4 pb-6 space-y-2">
                 <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">Home</a>
                 <a href="#skills" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">Skills</a>
                 <a href="#about" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">About Me</a>
                 <a href="#contact" class="block px-3 py-2 text-base font-medium text-white hover:text-sky-400 hover:bg-gray-900 rounded-md">Contact</a>
-                <a href="#projects" class="block px-3 py-2 text-base font-bold text-white hover:text-sky-400">PROJECTS</a>
+                <a href="#projects" class="block px-3 py-2 text-base font-bold text-sky-400 hover:text-white mt-4 border border-sky-400 rounded-md text-center">PROJECTS</a>
             </div>
         </div>
     </header>
 
     <!-- SECTION 1: HERO -->
-    <section class="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         
         <!-- Background Elements -->
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl -z-10"></div>
         <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-red-600/10 rounded-full blur-3xl -z-10"></div>
 
-        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-24 items-center py-12">
+        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             
             <!-- LEFT COLUMN: Typography -->
-            <div class="space-y-4 animate-fade-in-left">
-                <p class="text-xl sm:text-2xl text-gray-400 font-light italic tracking-wide">
+            <div class="space-y-4 animate-fade-in-left text-center lg:text-left z-10">
+                <p class="text-lg sm:text-2xl text-gray-400 font-light italic tracking-wide">
                     Wana Know About Me...? <span class="text-white font-normal not-italic">I</span>
                 </p>
                 
-                <div class="flex flex-col space-y-2">
-                    <h1 class="big-text text-6xl sm:text-8xl lg:text-9xl font-black text-white tracking-tighter cursor-default">
+                <div class="flex flex-col space-y-1 sm:space-y-2 select-none">
+                    <h1 class="big-text text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-white tracking-tighter cursor-default">
                         CREATE
                     </h1>
-                    <h1 class="big-text text-6xl sm:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-white tracking-tighter cursor-default">
+                    <h1 class="big-text text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-white tracking-tighter cursor-default">
                         CRAFT
                     </h1>
-                    <h1 class="big-text text-6xl sm:text-8xl lg:text-9xl font-black text-white tracking-tighter cursor-default whitespace-nowrap">
+                    <h1 class="big-text text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-white tracking-tighter cursor-default whitespace-nowrap">
                         EXPLORE <span class="text-sky-400">!</span>
                     </h1>
                 </div>
             </div>
 
             <!-- RIGHT COLUMN: Services & Info -->
-            <div class="flex flex-col justify-center space-y-8 lg:pl-12 animate-fade-in-right">
+            <div class="flex flex-col justify-center items-center lg:items-start space-y-8 lg:pl-12 animate-fade-in-right z-10">
                 
-                <h2 class="text-3xl font-bold text-white relative inline-block">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white relative inline-block text-center lg:text-left">
                     The Service I Provide
-                    <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-sky-400"></span>
+                    <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-sky-400 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0"></span>
                 </h2>
 
-                <div class="p-0">
-                    <p class="text-gray-300 leading-relaxed text-lg">
+                <div class="max-w-md lg:max-w-full">
+                    <p class="text-gray-300 leading-relaxed text-base sm:text-lg text-center lg:text-left">
                         I specialize in building digital experiences that merge creativity with functionality. From robust backend architectures to stunning interactive frontends, I bring ideas to life using modern web technologies.
                     </p>
                 </div>
@@ -178,23 +181,19 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full items-center">
                 
                 <!-- Inner Left Box (Image Container) -->
-                <!-- bg-white, relative, radius 5px. Image absolute. -->
-                <div class="bg-white relative w-full h-[350px] lg:h-[400px] rounded-[5px] overflow-hidden">
-                    <img src="" alt="About Me Image" class="absolute inset-0 w-full h-full object-cover">
-                    <!-- Placeholder Text for empty src -->
-                    <div class="absolute inset-0 flex items-center justify-center text-gray-400">
-                        <span class="text-sm uppercase tracking-widest">[ Image Placeholder ]</span>
-                    </div>
+                <!-- Use aspect-ratio to ensure image box doesn't collapse or stretch weirdly on different browsers -->
+                <div class="bg-white relative w-full aspect-square lg:aspect-auto lg:h-[400px] rounded-[5px] overflow-hidden">
+                    <img src="po1.jpg" alt="About Me Image" class="absolute inset-0 w-full h-full object-cover">
                 </div>
 
                 <!-- Right Boxes (Content) -->
-                <div class="flex flex-col justify-center space-y-6">
+                <div class="flex flex-col justify-center space-y-6 text-center lg:text-left">
                     
                     <!-- The 3 Headings -->
                     <div class="space-y-1">
-                        <h2 class="text-3xl font-black text-white uppercase">Your Name</h2>
+                        <h2 class="text-3xl font-black text-white uppercase">Rithis</h2>
                         <h3 class="text-xl font-bold text-sky-400">Full Stack Developer</h3>
-                        <h4 class="text-lg font-medium text-gray-400">Based in Creative City</h4>
+                        <h4 class="text-lg font-medium text-gray-400">Trying different things</h4>
                     </div>
 
                     <!-- The Blue Box (Para) -->
@@ -223,15 +222,16 @@
         
         <!-- Title -->
         <div class="mb-12 text-center animate-on-scroll opacity-0 translate-y-10 transition duration-1000">
-            <h2 class="text-4xl sm:text-5xl font-black text-white uppercase tracking-wider relative inline-block pb-4">
+            <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-wider relative inline-block pb-4">
                 My Top Skills
                 <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-sky-400"></span>
             </h2>
         </div>
 
         <!-- The "Big Box" Container (Scrollable) -->
-        <!-- Adjusted height to h-[280px] as requested -->
-        <div class="max-w-6xl w-full border border-gray-800 rounded-[5px] p-4 bg-white/5 backdrop-blur-sm overflow-y-auto h-[280px] custom-scrollbar animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-200">
+        <!-- Fixed height adjustment: 2 rows (160px * 2) + gap (24px) + padding (32px) = approx 376px. 
+             Set to 400px to be safe across browsers with different scrollbar widths. -->
+        <div class="max-w-6xl w-full border border-gray-800 rounded-[5px] p-4 bg-white/5 backdrop-blur-sm overflow-y-auto h-[400px] custom-scrollbar animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-200">
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 
@@ -372,7 +372,7 @@
         
         <!-- 1st Box: Title -->
         <div class="text-center mb-10 animate-on-scroll opacity-0 translate-y-10 transition duration-1000">
-            <h2 class="text-4xl sm:text-5xl font-black text-white uppercase tracking-wider relative inline-block pb-4">
+            <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-wider relative inline-block pb-4">
                 My Projects
                 <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-sky-400"></span>
             </h2>
@@ -380,11 +380,9 @@
 
         <!-- 2nd Box: Genre Filters -->
         <div class="flex flex-wrap justify-center gap-4 mb-12 animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-100">
-            <button class="filter-btn active px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="all">All</button>
-            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="frontend">Frontend</button>
-            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="fullstack">Fullstack</button>
-            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="n8n">n8n Automation</button>
-            <button class="filter-btn px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300" data-filter="featured">Featured</button>
+            <button class="filter-btn active px-4 sm:px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300 text-sm sm:text-base" data-filter="all">All</button>
+            <button class="filter-btn px-4 sm:px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300 text-sm sm:text-base" data-filter="frontend">Frontend</button>
+            <button class="filter-btn px-4 sm:px-6 py-2 border border-gray-600 rounded-full text-gray-300 font-bold hover:border-sky-400 hover:text-sky-400 transition-all duration-300 text-sm sm:text-base" data-filter="fullstack">Fullstack</button>
         </div>
 
         <!-- 3rd Big Box: Project Grid Container -->
@@ -392,78 +390,43 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Project 1 (Featured, Fullstack) -->
-                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="featured fullstack">
+                <!-- Project 1: Vortex (Frontend) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="frontend">
                     <!-- Image -->
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop" alt="E-commerce Dashboard" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute top-2 right-2 bg-sky-400 text-black text-xs font-bold px-2 py-1 rounded">FEATURED</div>
+                    <div class="h-48 overflow-hidden relative bg-gray-900 flex items-center justify-center">
+                        <img src="vx.png" alt="Vortex Gaming Website" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <!-- Placeholder Indicator if needed -->
                     </div>
                     <!-- Description -->
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">E-Commerce Dashboard</h3>
-                        <p class="text-sm text-gray-400 mb-4">A complete admin panel for managing products and orders built with React & Node.js.</p>
-                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Vortex</h3>
+                        <p class="text-sm text-gray-400 mb-4">A dynamic gaming website designed for an immersive user experience.</p>
+                        <a href="https://github.com/Rithis24/Vortex" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
 
-                <!-- Project 2 (Frontend) -->
-                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="frontend">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop" alt="Portfolio v1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Creative Agency Site</h3>
-                        <p class="text-sm text-gray-400 mb-4">A high-performance landing page with complex GSAP animations and Tailwind CSS.</p>
-                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
-                    </div>
-                </div>
-
-                <!-- Project 3 (n8n Automation) -->
-                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="n8n featured">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop" alt="Workflow Automation" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute top-2 right-2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded">n8n</div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Lead Gen Auto-Pilot</h3>
-                        <p class="text-sm text-gray-400 mb-4">Automated workflow that scrapes leads, enriches data, and sends personalized emails via n8n.</p>
-                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
-                    </div>
-                </div>
-
-                <!-- Project 4 (Fullstack) -->
+                <!-- Project 2: Portfolio (Fullstack) -->
                 <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="fullstack">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" alt="Social Media App" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="h-48 overflow-hidden relative bg-gray-900 flex items-center justify-center">
+                        <img src="po.png" alt="My Portfolio" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Social Connect App</h3>
-                        <p class="text-sm text-gray-400 mb-4">Real-time chat and feed application using PostgreSQL, Express, and Socket.io.</p>
-                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Portfolio</h3>
+                        <p class="text-sm text-gray-400 mb-4">This personal portfolio website, showcasing my skills and projects.</p>
+                        <a href="https://github.com/Rithis24/Rithis-Portfolio" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
 
-                 <!-- Project 5 (Frontend) -->
-                 <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="frontend">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Dashboard UI" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                <!-- Project 3: Caremate (Fullstack) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="fullstack">
+                    <div class="h-48 overflow-hidden relative bg-gray-900 flex items-center justify-center">
+                        <img src="" alt="Caremate Website" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                         <!-- Placeholder Indicator -->
+                         <div class="absolute text-gray-600 text-xs font-bold uppercase tracking-widest">[ Image Placeholder ]</div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Analytics Dashboard UI</h3>
-                        <p class="text-sm text-gray-400 mb-4">Clean, responsive data visualization dashboard using Chart.js and CSS Grid.</p>
-                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
-                    </div>
-                </div>
-
-                <!-- Project 6 (n8n) -->
-                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="n8n">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop" alt="Bot Automation" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Slack Ops Bot</h3>
-                        <p class="text-sm text-gray-400 mb-4">A bot that handles internal ticketing and status updates automatically via n8n triggers.</p>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Caremate</h3>
+                        <p class="text-sm text-gray-400 mb-4">The best website for relieving mental stress and promoting well-being.</p>
                         <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
@@ -478,18 +441,18 @@
         <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
             
             <!-- Left Box: Contact Information -->
-            <div class="flex flex-col space-y-8 animate-on-scroll opacity-0 translate-y-10 transition duration-1000">
+            <div class="flex flex-col space-y-8 animate-on-scroll opacity-0 translate-y-10 transition duration-1000 text-center lg:text-left">
                 <div class="space-y-4">
                     <p class="text-sky-400 font-bold tracking-widest uppercase text-sm">Get in Touch</p>
-                    <h2 class="text-5xl font-black text-white uppercase leading-none">Let's Work<br>Together</h2>
-                    <p class="text-gray-400 text-lg leading-relaxed max-w-md">
+                    <h2 class="text-4xl sm:text-5xl font-black text-white uppercase leading-none">Let's Work<br>Together</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
                         Have a project in mind or just want to say hi? I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
                     </p>
                 </div>
 
                 <div class="space-y-6">
                     <!-- Email -->
-                    <div class="flex items-center space-x-4 group cursor-pointer">
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 group cursor-pointer">
                         <div class="w-12 h-12 bg-gray-900 rounded-[5px] flex items-center justify-center group-hover:bg-sky-400 transition-colors duration-300">
                             <i class="fas fa-envelope text-white group-hover:text-black transition-colors"></i>
                         </div>
@@ -500,19 +463,19 @@
                     </div>
 
                     <!-- Location -->
-                    <div class="flex items-center space-x-4 group cursor-pointer">
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 group cursor-pointer">
                         <div class="w-12 h-12 bg-gray-900 rounded-[5px] flex items-center justify-center group-hover:bg-sky-400 transition-colors duration-300">
                             <i class="fas fa-map-marker-alt text-white group-hover:text-black transition-colors"></i>
                         </div>
                         <div>
                             <p class="text-sm text-gray-500 font-bold uppercase">Location</p>
-                            <p class="text-white text-lg font-medium">Kotagiri, The nilgiries</p>
+                            <p class="text-white text-lg font-medium">Kotagiri, The Nilgiries</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Social Links in Left Box -->
-                <div class="pt-8">
+                <div class="pt-8 flex justify-center lg:justify-start">
                     <div class="flex space-x-6">
                         <a href="https://github.com/Rithis24" class="w-10 h-10 border border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-black hover:bg-sky-400 hover:border-sky-400 transition-all duration-300">
                             <i class="fab fa-github"></i>
@@ -529,37 +492,39 @@
 
             <!-- Right Box: Contact Form -->
             <div class="bg-white/5 backdrop-blur-sm border border-gray-800 p-8 rounded-[5px] animate-on-scroll opacity-0 translate-y-10 transition duration-1000 delay-200">
-                <form class="space-y-6">
+                <form id="contact-form" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Name -->
                         <div class="relative group">
-                            <input type="text" id="name" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Name">
+                            <input type="text" id="name" name="from_name" required class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Name">
                             <label for="name" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Name</label>
                         </div>
                         <!-- Email -->
                         <div class="relative group">
-                            <input type="email" id="email" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Email">
+                            <input type="email" id="email" name="reply_to" required class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Email">
                             <label for="email" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Email</label>
                         </div>
                     </div>
                     
                     <!-- Subject -->
                     <div class="relative group">
-                        <input type="text" id="subject" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Subject">
+                        <input type="text" id="subject" name="subject" required class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent" placeholder="Subject">
                         <label for="subject" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Subject</label>
                     </div>
 
                     <!-- Message -->
                     <div class="relative group">
-                        <textarea id="message" rows="5" class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent resize-none" placeholder="Message"></textarea>
+                        <textarea id="message" name="message" rows="5" required class="w-full bg-black border border-gray-700 text-white px-4 py-3 rounded-[5px] focus:outline-none focus:border-sky-400 transition-colors peer placeholder-transparent resize-none" placeholder="Message"></textarea>
                         <label for="message" class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-focus:-top-2.5 peer-focus:text-sky-400 peer-focus:text-xs peer-focus:bg-black peer-focus:px-1 pointer-events-none">Message</label>
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full px-6 py-4 font-bold text-black bg-white rounded-[5px] transition-all duration-300 hover:bg-sky-400 hover:shadow-[0_0_20px_rgba(135,206,235,0.4)]">
-                        SEND MESSAGE
-                        <i class="fas fa-paper-plane ml-2"></i>
+                    <button type="submit" id="submit-btn" class="w-full px-6 py-4 font-bold text-black bg-white rounded-[5px] transition-all duration-300 hover:bg-sky-400 hover:shadow-[0_0_20px_rgba(135,206,235,0.4)] flex items-center justify-center gap-2">
+                        <span>SEND MESSAGE</span>
+                        <i class="fas fa-paper-plane"></i>
                     </button>
+                    <!-- Status Message Area -->
+                    <p id="form-status" class="text-center text-sm font-medium hidden"></p>
                 </form>
             </div>
 
@@ -568,27 +533,97 @@
 
     <!-- FOOTER -->
     <footer class="bg-black border-t border-gray-900 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-gray-500 text-sm">© 2025 <span class="text-white font-bold">Rithis Portfolio</span>. All rights reserved.</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <p class="text-gray-500 text-sm">© 2024 <span class="text-white font-bold">Rithis Portfolio</span>. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Social Links Sidebar -->
-    <div class="hidden lg:flex fixed left-8 bottom-0 flex-col gap-6 items-center z-40">
+    <div class="hidden xl:flex fixed left-8 bottom-0 flex-col gap-6 items-center z-40">
         <div class="w-px h-20 bg-gray-700"></div>
         <a href="https://github.com/Rithis24" class="text-gray-400 hover:text-sky-400 text-xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/rithis24/" class="text-gray-400 hover:text-sky-400 text-xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.linkedin.com/in/rithis24/" class="text-gray-400 hover:text-sky-400 text-xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://www.instagram.com/rith.is_24/" class="text-gray-400 hover:text-sky-400 text-xl transition-transform hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
         <div class="w-px h-20 bg-gray-700"></div>
     </div>
 
     <script>
+        // Initialize EmailJS
+        // REPLACE 'YOUR_PUBLIC_KEY' WITH YOUR ACTUAL PUBLIC KEY FROM EMAILJS DASHBOARD
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY");
+        })();
+
         // Mobile Menu Toggle
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
 
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
+        });
+
+        // Contact Form Handling
+        const contactForm = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = submitBtn.querySelector('span');
+        const btnIcon = submitBtn.querySelector('i');
+        const statusMsg = document.getElementById('form-status');
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // 1. Loading State
+            submitBtn.disabled = true;
+            btnText.innerText = "SENDING...";
+            btnIcon.className = "fas fa-spinner fa-spin";
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            // 2. Send Email
+            // REPLACE 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID'
+            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+                .then(function() {
+                    // Success
+                    console.log('SUCCESS!');
+                    btnText.innerText = "MESSAGE SENT!";
+                    btnIcon.className = "fas fa-check";
+                    submitBtn.classList.remove('bg-white', 'text-black', 'hover:bg-sky-400');
+                    submitBtn.classList.add('bg-green-500', 'text-white');
+                    
+                    statusMsg.innerText = "Thanks! I'll get back to you soon.";
+                    statusMsg.className = "text-center text-sm font-medium text-green-400 mt-2 block";
+                    
+                    contactForm.reset();
+
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        btnText.innerText = "SEND MESSAGE";
+                        btnIcon.className = "fas fa-paper-plane";
+                        submitBtn.classList.add('bg-white', 'text-black', 'hover:bg-sky-400');
+                        submitBtn.classList.remove('bg-green-500', 'text-white', 'opacity-70', 'cursor-not-allowed');
+                        statusMsg.classList.add('hidden');
+                    }, 5000);
+
+                }, function(error) {
+                    // Error
+                    console.log('FAILED...', error);
+                    btnText.innerText = "FAILED TO SEND";
+                    btnIcon.className = "fas fa-times";
+                    submitBtn.classList.remove('bg-white', 'text-black');
+                    submitBtn.classList.add('bg-red-500', 'text-white');
+
+                    statusMsg.innerText = "Something went wrong. Please try again later.";
+                    statusMsg.className = "text-center text-sm font-medium text-red-400 mt-2 block";
+
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        btnText.innerText = "SEND MESSAGE";
+                        btnIcon.className = "fas fa-paper-plane";
+                        submitBtn.classList.add('bg-white', 'text-black');
+                        submitBtn.classList.remove('bg-red-500', 'text-white', 'opacity-70', 'cursor-not-allowed');
+                        statusMsg.classList.add('hidden');
+                    }, 5000);
+                });
         });
 
         // Intersection Observer for Scroll Animations
