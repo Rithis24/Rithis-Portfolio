@@ -68,6 +68,74 @@
             color: black;
             border-color: white;
         }
+
+        /* Button 86 Styles - Adapted for Theme */
+        .button-86 {
+            all: unset;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 12px; /* Reduced from 14px */
+            background: transparent;
+            border: none;
+            position: relative;
+            color: #000000; /* Black text */
+            cursor: pointer;
+            z-index: 1;
+            padding: 6px 16px; /* Reduced from 8px 20px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .button-86::after,
+        .button-86::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: -99999;
+            transition: all .4s;
+        }
+
+        .button-86::before {
+            transform: translate(0%, 0%);
+            width: 100%;
+            height: 100%;
+            background: #ffffff; /* White background */
+            border-radius: 5px;
+        }
+
+        .button-86::after {
+            transform: translate(4px, 4px); /* Reduced offset from 6px */
+            width: 20px; /* Reduced size from 25px */
+            height: 20px; /* Reduced size from 25px */
+            background: #87CEEB; /* SkyBlue accent */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 50px;
+        }
+
+        .button-86:hover::before {
+            transform: translate(5%, 20%);
+            width: 110%;
+            height: 110%;
+        }
+
+        .button-86:hover::after {
+            border-radius: 5px;
+            transform: translate(0, 0);
+            width: 100%;
+            height: 100%;
+        }
+
+        .button-86:active::after {
+            transition: 0s;
+            transform: translate(0, 5%);
+        }
     </style>
 </head>
 <body class="bg-black text-white min-h-screen flex flex-col w-full overflow-x-hidden">
@@ -94,7 +162,7 @@
 
                 <!-- 3rd Box: Button -->
                 <div class="hidden md:flex items-center">
-                    <a href="#projects" class="px-4 lg:px-6 py-2 font-bold text-black bg-white rounded-[5px] transition-colors duration-300 hover:bg-sky-400 text-xs lg:text-sm">
+                    <a href="#projects" class="button-86" role="button">
                         PROJECTS
                     </a>
                 </div>
@@ -194,7 +262,7 @@
                     <div class="space-y-1">
                         <h2 class="text-3xl font-black text-white uppercase">Rithis</h2>
                         <h3 class="text-xl font-bold text-sky-400">Full Stack Developer</h3>
-                        <h4 class="text-lg font-medium text-gray-400">Trying different things</h4>
+                        <h4 class="text-lg font-medium text-gray-400">Based in Creative City</h4>
                     </div>
 
                     <!-- The Blue Box (Para) -->
@@ -394,40 +462,41 @@
                 <!-- Project 1: Vortex (Frontend) -->
                 <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="frontend">
                     <!-- Image -->
-                    <div class="h-48 overflow-hidden relative bg-gray-900 flex items-center justify-center">
+                    <div class="h-60 overflow-hidden relative bg-gray-900 flex items-center justify-center">
                         <img src="vx.png" alt="Vortex Gaming Website" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <!-- Placeholder Indicator if needed -->
                     </div>
                     <!-- Description -->
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Vortex</h3>
-                        <p class="text-sm text-gray-400 mb-4">A dynamic gaming website designed for an immersive user experience.</p>
-                        <a href="https://github.com/Rithis24/Vortex" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors">Vortex</h3>
+                        <p class="text-base text-gray-400 mb-6">A dynamic gaming website designed for an immersive user experience.</p>
+                        <a href="https://github.com/Rithis24/Vortex" class="text-sky-400 text-base font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
 
-                <!-- Project 2: Portfolio (Fullstack) -->
-                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="fullstack">
-                    <div class="h-48 overflow-hidden relative bg-gray-900 flex items-center justify-center">
+                <!-- Project 2: Portfolio (Frontend) -->
+                <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="frontend">
+                    <div class="h-60 overflow-hidden relative bg-gray-900 flex items-center justify-center">
                         <img src="po.png" alt="My Portfolio" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Portfolio</h3>
-                        <p class="text-sm text-gray-400 mb-4">This personal portfolio website, showcasing my skills and projects.</p>
-                        <a href="https://github.com/Rithis24/Rithis-Portfolio" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors">Portfolio</h3>
+                        <p class="text-base text-gray-400 mb-6">This personal portfolio website, showcasing my skills and projects.</p>
+                        <a href="https://github.com/Rithis24/Rithis-Portfolio" class="text-sky-400 text-base font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
 
                 <!-- Project 3: Caremate (Fullstack) -->
                 <div class="project-card group bg-black border border-gray-800 rounded-[5px] overflow-hidden hover:border-sky-400 transition-all duration-300" data-category="fullstack">
-                    <div class="h-48 overflow-hidden relative bg-gray-900 flex items-center justify-center">
+                    <div class="h-60 overflow-hidden relative bg-gray-900 flex items-center justify-center">
                         <img src="caremate.jpeg" alt="Caremate Website" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                          <!-- Placeholder Indicator -->
+                         <div class="absolute text-gray-600 text-xs font-bold uppercase tracking-widest">[ Image Placeholder ]</div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">Caremate</h3>
-                        <p class="text-sm text-gray-400 mb-4">The best website for relieving mental stress and promoting well-being.</p>
-                        <a href="#" class="text-sky-400 text-sm font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors">Caremate</h3>
+                        <p class="text-base text-gray-400 mb-6">The best website for relieving mental stress and promoting well-being.</p>
+                        <a href="#" class="text-sky-400 text-base font-bold hover:underline">View Details <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
 
@@ -548,138 +617,149 @@
     </div>
 
     <script>
-        // Initialize EmailJS
-        // REPLACE 'YOUR_PUBLIC_KEY' WITH YOUR ACTUAL PUBLIC KEY FROM EMAILJS DASHBOARD
-        (function() {
-            emailjs.init("YOUR_PUBLIC_KEY");
-        })();
-
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-        // Contact Form Handling
-        const contactForm = document.getElementById('contact-form');
-        const submitBtn = document.getElementById('submit-btn');
-        const btnText = submitBtn.querySelector('span');
-        const btnIcon = submitBtn.querySelector('i');
-        const statusMsg = document.getElementById('form-status');
-
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // 1. Loading State
-            submitBtn.disabled = true;
-            btnText.innerText = "SENDING...";
-            btnIcon.className = "fas fa-spinner fa-spin";
-            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
-
-            // 2. Send Email
-            // REPLACE 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID'
-            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
-                .then(function() {
-                    // Success
-                    console.log('SUCCESS!');
-                    btnText.innerText = "MESSAGE SENT!";
-                    btnIcon.className = "fas fa-check";
-                    submitBtn.classList.remove('bg-white', 'text-black', 'hover:bg-sky-400');
-                    submitBtn.classList.add('bg-green-500', 'text-white');
-                    
-                    statusMsg.innerText = "Thanks! I'll get back to you soon.";
-                    statusMsg.className = "text-center text-sm font-medium text-green-400 mt-2 block";
-                    
-                    contactForm.reset();
-
-                    // Reset button after 3 seconds
-                    setTimeout(() => {
-                        submitBtn.disabled = false;
-                        btnText.innerText = "SEND MESSAGE";
-                        btnIcon.className = "fas fa-paper-plane";
-                        submitBtn.classList.add('bg-white', 'text-black', 'hover:bg-sky-400');
-                        submitBtn.classList.remove('bg-green-500', 'text-white', 'opacity-70', 'cursor-not-allowed');
-                        statusMsg.classList.add('hidden');
-                    }, 5000);
-
-                }, function(error) {
-                    // Error
-                    console.log('FAILED...', error);
-                    btnText.innerText = "FAILED TO SEND";
-                    btnIcon.className = "fas fa-times";
-                    submitBtn.classList.remove('bg-white', 'text-black');
-                    submitBtn.classList.add('bg-red-500', 'text-white');
-
-                    statusMsg.innerText = "Something went wrong. Please try again later.";
-                    statusMsg.className = "text-center text-sm font-medium text-red-400 mt-2 block";
-
-                    setTimeout(() => {
-                        submitBtn.disabled = false;
-                        btnText.innerText = "SEND MESSAGE";
-                        btnIcon.className = "fas fa-paper-plane";
-                        submitBtn.classList.add('bg-white', 'text-black');
-                        submitBtn.classList.remove('bg-red-500', 'text-white', 'opacity-70', 'cursor-not-allowed');
-                        statusMsg.classList.add('hidden');
-                    }, 5000);
-                });
-        });
-
-        // Intersection Observer for Scroll Animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('opacity-100', 'translate-y-0');
-                    entry.target.classList.remove('opacity-0', 'translate-y-10');
-                    observer.unobserve(entry.target);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize EmailJS
+            // REPLACE 'YOUR_PUBLIC_KEY' WITH YOUR ACTUAL PUBLIC KEY FROM EMAILJS DASHBOARD
+            (function() {
+                try {
+                    emailjs.init("YOUR_PUBLIC_KEY");
+                } catch (e) {
+                    console.warn("EmailJS not initialized (missing key?)");
                 }
-            });
-        }, observerOptions);
+            })();
 
-        // Animate elements in the first section
-        document.querySelectorAll('.animate-fade-in-left').forEach(el => {
-            el.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-1000', 'ease-out');
-            observer.observe(el);
-        });
-        document.querySelectorAll('.animate-fade-in-right').forEach(el => {
-            el.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-1000', 'delay-200', 'ease-out');
-            observer.observe(el);
-        });
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-        // Animate Sections
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
 
-        // Project Filter Logic
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
+            // Contact Form Handling
+            const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const formStatus = document.getElementById('form-status');
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                btn.classList.add('active');
+            if (contactForm && submitBtn && formStatus) {
+                const btnText = submitBtn.querySelector('span');
+                const btnIcon = submitBtn.querySelector('i');
 
-                const filterValue = btn.getAttribute('data-filter');
+                contactForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
 
-                projectCards.forEach(card => {
-                    if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
-                        card.style.display = 'block';
-                        // Add fade in animation
-                        card.classList.add('animate-on-scroll');
-                        card.classList.remove('hidden');
-                    } else {
-                        card.style.display = 'none';
+                    // 1. Loading State
+                    submitBtn.disabled = true;
+                    if(btnText) btnText.innerText = "SENDING...";
+                    if(btnIcon) btnIcon.className = "fas fa-spinner fa-spin";
+                    submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+                    // 2. Send Email
+                    // REPLACE 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID'
+                    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+                        .then(function() {
+                            // Success
+                            console.log('SUCCESS!');
+                            if(btnText) btnText.innerText = "MESSAGE SENT!";
+                            if(btnIcon) btnIcon.className = "fas fa-check";
+                            submitBtn.classList.remove('bg-white', 'text-black', 'hover:bg-sky-400');
+                            submitBtn.classList.add('bg-green-500', 'text-white');
+                            
+                            formStatus.innerText = "Thanks! I'll get back to you soon.";
+                            formStatus.className = "text-center text-sm font-medium text-green-400 mt-2 block";
+                            
+                            contactForm.reset();
+
+                            // Reset button after 3 seconds
+                            setTimeout(() => {
+                                submitBtn.disabled = false;
+                                if(btnText) btnText.innerText = "SEND MESSAGE";
+                                if(btnIcon) btnIcon.className = "fas fa-paper-plane";
+                                submitBtn.classList.add('bg-white', 'text-black', 'hover:bg-sky-400');
+                                submitBtn.classList.remove('bg-green-500', 'text-white', 'opacity-70', 'cursor-not-allowed');
+                                formStatus.classList.add('hidden');
+                            }, 5000);
+
+                        }, function(error) {
+                            // Error
+                            console.log('FAILED...', error);
+                            if(btnText) btnText.innerText = "FAILED TO SEND";
+                            if(btnIcon) btnIcon.className = "fas fa-times";
+                            submitBtn.classList.remove('bg-white', 'text-black');
+                            submitBtn.classList.add('bg-red-500', 'text-white');
+
+                            formStatus.innerText = "Something went wrong. Please try again later.";
+                            formStatus.className = "text-center text-sm font-medium text-red-400 mt-2 block";
+
+                            setTimeout(() => {
+                                submitBtn.disabled = false;
+                                if(btnText) btnText.innerText = "SEND MESSAGE";
+                                if(btnIcon) btnIcon.className = "fas fa-paper-plane";
+                                submitBtn.classList.add('bg-white', 'text-black');
+                                submitBtn.classList.remove('bg-red-500', 'text-white', 'opacity-70', 'cursor-not-allowed');
+                                formStatus.classList.add('hidden');
+                            }, 5000);
+                        });
+                });
+            }
+
+            // Intersection Observer for Scroll Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        entry.target.classList.remove('opacity-0', 'translate-y-10');
+                        observer.unobserve(entry.target);
                     }
+                });
+            }, observerOptions);
+
+            // Animate elements in the first section
+            document.querySelectorAll('.animate-fade-in-left').forEach(el => {
+                el.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-1000', 'ease-out');
+                observer.observe(el);
+            });
+            document.querySelectorAll('.animate-fade-in-right').forEach(el => {
+                el.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-1000', 'delay-200', 'ease-out');
+                observer.observe(el);
+            });
+
+            // Animate Sections
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Project Filter Logic
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    projectCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
+                            card.style.display = 'block';
+                            // Add fade in animation
+                            card.classList.add('animate-on-scroll');
+                            card.classList.remove('hidden');
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
             });
         });
